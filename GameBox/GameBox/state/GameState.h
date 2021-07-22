@@ -8,6 +8,7 @@
 #include "../AnimatedGameObject.h"
 #include "../TextureHandler.h"
 #include "../gameObjects/gameObject.h"
+#include "../QuadTree.h"
 
 class GameState final : public State {
 public:
@@ -25,9 +26,10 @@ private:
 
 	sf::Sprite m_BackgroundSprite;
 
-
 	sf::Text text;
 	std::ostringstream stream;
+
+	QuadTree m_tree;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

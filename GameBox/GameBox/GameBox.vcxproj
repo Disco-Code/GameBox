@@ -168,6 +168,7 @@
     <ClCompile Include="Cannonball.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gameObjects\gameObject.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="state\GameState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="state\MainMenuState.cpp">
@@ -184,6 +185,7 @@
     <ClInclude Include="Cannonball.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gameObjects\gameObject.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="state\GameState.h" />
     <ClInclude Include="state\MainMenuState.h" />
     <ClInclude Include="state\State.h" />

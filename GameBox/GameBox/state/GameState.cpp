@@ -28,6 +28,12 @@ GameState::GameState(Game* pGame) : State(States::Game, pGame) {
 	m_animatedCharacterSprite->setAnimation(0);
 	m_gameObjectList.push_back(m_animatedCharacterSprite);
 
+	m_tree.Initialize({ 0.0f, 0.0f, (float)m_game->getWindow()->getSize().x, (float)m_game->getWindow()->getSize().y });
+	//m_tree.AddGameObject(m_gameObjectList[0]);
+
+	for (auto& i : m_gameObjectList) {
+		m_tree.AddGameObject(i);
+	}
 }
 
 GameState::~GameState() {
@@ -41,6 +47,8 @@ void GameState::update(float dt) {
 	for (auto& i : m_gameObjectList) {
 		i->update(dt);
 	}
+
+	m_tree.UpdateTree();
 
 	this->stream.str("test"); // Clear
 	this->text.setString(stream.str());	/* Update text with new stream */
@@ -69,6 +77,8 @@ void GameState::handleWindowEvent(const sf::Event& windowEvent) {
 void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	// Make sure everything in the game is drawn.
 	target.draw(m_BackgroundSprite, states);
+
+	target.draw(m_tree, states);
 
 	for (auto& i : m_gameObjectList) {
 		target.draw(*i, states);

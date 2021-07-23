@@ -5,7 +5,7 @@
 #include <iostream>
 #include "State.h"
 
-#include "../AnimatedGameObject.h"
+//#include "../AnimatedGameObject.h"
 #include "../TextureHandler.h"
 #include "../gameObjects/gameObject.h"
 #include "../QuadTree.h"
@@ -30,6 +30,5 @@ private:
 	std::ostringstream stream;
 
 	QuadTree m_tree;
-
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	entityx::Entity m_playerEntity;
 };

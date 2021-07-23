@@ -36,7 +36,4 @@ private:
 
 	sf::Texture m_logoTexture;
 	sf::Sprite m_logoSprite;
-
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
 };

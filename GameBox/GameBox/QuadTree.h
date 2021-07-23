@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include "gameObjects/gameObject.h"
 #include "SFML/Graphics.hpp"
+#include "entityx/Entity.h"
 
 class Node : public sf::Drawable, public sf::FloatRect {
 public:
@@ -14,7 +15,7 @@ public:
 	sf::RectangleShape m_shape_white;
 	sf::RectangleShape m_shape_red;
 
-	std::vector<GameObject*> m_gameobjects;
+	std::vector<entityx::Entity> m_gameobjects;
 	void createChildNodes();
 
 	// Inherited via Drawable
@@ -42,14 +43,14 @@ public:
 	~QuadTree();
 
 	void Initialize(const sf::FloatRect& rect);
-	void AddGameObject(GameObject* gameObject);
+	void AddGameObject(entityx::Entity& entity);
 	void UpdateTree();
 
 private:
-	void AddGameObjectInternal(GameObject* gameObject);
+	void AddGameObjectInternal(entityx::Entity& entity);
 
 	Node* m_rootNode;
-	std::unordered_map<GameObject*, Node*> m_AllGameObjects;
+	std::unordered_map<entityx::Entity, Node*> m_AllGameObjects;
 
 	// Inherited via Drawable
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

@@ -9,7 +9,6 @@ public:
 
 	void handleWindowEvent(const sf::Event& event);
 	void update();
-	void render();
 	void SetState(States::ID id);
 
 	sf::RenderWindow* getWindow();

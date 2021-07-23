@@ -1,3 +1,4 @@
+/////TODO: Remove this file if going forward with the ECS solution
 #include "AnimatedGameObject.h"
 
 AnimatedGameObject::AnimatedGameObject(size_t nColumns, size_t nRows) {

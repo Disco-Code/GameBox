@@ -26,12 +26,9 @@ void Game::update() {
 
 	ApplyNextState();
 	m_currentState->processInput(dt);
-	m_currentState->update(dt);
-}
 
-void Game::render() {
 	m_window.clear();
-	m_window.draw(*m_currentState);
+	m_currentState->update(dt);
 	m_window.display();
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "entityx/entityx.h"
 
 // Forward declare the StateStack
 class StateStack;
@@ -15,7 +16,7 @@ namespace States {
 }
 
 // Base class for all states
-class State : public sf::Drawable {
+class State :public entityx::EntityX {
 
 public:
 	State(States::ID id, Game* pGame);

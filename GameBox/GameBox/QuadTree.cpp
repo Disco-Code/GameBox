@@ -1,4 +1,5 @@
 #include "QuadTree.h"
+#include "entityx/entityx.h"
 
 QuadTree::QuadTree() {
 }
@@ -14,12 +15,12 @@ void QuadTree::Initialize(const sf::FloatRect& rect) {
 	*m_rootNode = rect;
 }
 
-void QuadTree::AddGameObject(GameObject* gameObject) {
-	if (!gameObject) {
+void QuadTree::AddGameObject(entityx::Entity& entity) {
+	if (!entity.has_component<sf::Sprite>()) {
 		return;
 	}
 
-	AddGameObjectInternal(gameObject);
+	AddGameObjectInternal(entity);
 }
 
 void QuadTree::UpdateTree() {
@@ -27,14 +28,17 @@ void QuadTree::UpdateTree() {
 	m_rootNode->m_childNodes = nullptr;
 	m_rootNode->m_gameobjects.clear();
 	for (auto& i : m_AllGameObjects) {
-		AddGameObjectInternal(i.first);
+		entityx::Entity e = i.first;
+		AddGameObjectInternal(e);
 	}
 }
 
-void QuadTree::AddGameObjectInternal(GameObject* gameObject) {
+void QuadTree::AddGameObjectInternal(entityx::Entity& entity) {
 	Node* currentNode = m_rootNode;
 	Node* intersectedNode = nullptr;
-	const sf::FloatRect& rect = gameObject->getGlobalBounds();
+
+	auto a = entity.component<sf::Sprite>();
+	const sf::FloatRect rect = entity.component<sf::Sprite>().get()->getGlobalBounds();
 	bool finalNode = false;
 
 	while (finalNode == false) {
@@ -71,8 +75,8 @@ void QuadTree::AddGameObjectInternal(GameObject* gameObject) {
 
 	if (currentNode) {
 		//Store a pointer to the game object in the correct node;
-		currentNode->m_gameobjects.push_back(gameObject);
-		m_AllGameObjects[gameObject] = currentNode;
+		currentNode->m_gameobjects.push_back(entity);
+		m_AllGameObjects[entity] = currentNode;
 	}
 }
 

@@ -35,18 +35,16 @@ MainMenuState::~MainMenuState() {
 }
 
 void MainMenuState::update(float dt) {
+	sf::RenderWindow* window = m_game->getWindow();
+	window->draw(m_logoSprite);
+
+	for (auto& i : m_buttons) {
+		window->draw(i);
+	}
 }
 
 void MainMenuState::processInput(float dt) {
 
-}
-
-void MainMenuState::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(m_logoSprite, states);
-
-	for (auto& i : m_buttons) {
-		target.draw(i, states);
-	}
 }
 
 void MainMenuState::handleWindowEvent(const sf::Event& windowEvent) {

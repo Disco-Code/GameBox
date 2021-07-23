@@ -1,4 +1,6 @@
 #pragma once
+/////TODO: Remove this file if going forward with the ECS solution
+
 #include "gameObjects/gameObject.h"
 #include "SFML/Graphics/Texture.hpp"
 

@@ -15,7 +15,6 @@ int main() {
 		}
 
 		game.update();
-		game.render();
 	}
 
 	game.getWindow()->close();

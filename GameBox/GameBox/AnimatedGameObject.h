@@ -15,7 +15,7 @@ struct AnimationDescription {
 /// Used to set up animated Game Objects.
 /// ===How To Use==
 /// 1) Find/create a sprite sheet that contains the animated frames.
-///		1a) The spritesheet can contain multiple animations.
+///		1a) The sprite sheet can contain multiple animations.
 ///		1b) Animations does not have to have the same amount of frames.
 ///		1c) Animations are updated from left to right in the sheet, animations can span multiple rows and will automatically go down one row then reaching the last frame on current the row.
 ///		1d) Each new animation HAS to start on a new row in the sheet.

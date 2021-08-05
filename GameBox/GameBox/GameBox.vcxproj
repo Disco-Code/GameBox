@@ -164,8 +164,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AnimatedGameObject.cpp" />
     <ClCompile Include="Cannonball.cpp" />
+    <ClCompile Include="ECS\Systems\FollowTargetSystem.cpp" />
+    <ClCompile Include="ECS\Systems\SpriteAnimationSystem.cpp" />
+    <ClCompile Include="ECS\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gameObjects\gameObject.cpp" />
     <ClCompile Include="QuadTree.cpp" />
@@ -181,8 +183,11 @@
     <ClCompile Include="TextureHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimatedGameObject.h" />
     <ClInclude Include="Cannonball.h" />
+    <ClInclude Include="ECS\Systems.h" />
+    <ClInclude Include="ECS\Systems\FollowTargetSystem.h" />
+    <ClInclude Include="ECS\Systems\SpriteAnimationSystem.h" />
+    <ClInclude Include="ECS\Systems\SpriteRenderSystem.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gameObjects\gameObject.h" />
     <ClInclude Include="QuadTree.h" />

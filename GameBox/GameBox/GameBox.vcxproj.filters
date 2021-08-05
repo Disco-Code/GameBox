@@ -42,7 +42,13 @@
     <ClCompile Include="state\MainMenuState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedGameObject.cpp">
+    <ClCompile Include="ECS\Systems\FollowTargetSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\Systems\SpriteAnimationSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\Systems\SpriteRenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QuadTree.cpp">
@@ -68,10 +74,19 @@
     <ClInclude Include="gameObjects\gameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatedGameObject.h">
+    <ClInclude Include="state\MainMenuState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="state\MainMenuState.h">
+    <ClInclude Include="ECS\Systems\FollowTargetSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Systems\SpriteAnimationSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Systems\SpriteRenderSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Systems.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QuadTree.h">

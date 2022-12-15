@@ -91,6 +91,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ECS\Systems\LifeTimeSystem.cpp">
+    <ClCompile Include="state\Snek.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -183,6 +184,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ECS\Systems\LifeTimeSystem.h">
+    <ClInclude Include="state\Snek.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

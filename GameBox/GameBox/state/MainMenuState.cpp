@@ -87,7 +87,7 @@ void MainMenuState::handleWindowEvent(const sf::Event& windowEvent) {
 		}
 		break;
 	}
-		// case for when the mouse is moved
+	// case for when the mouse is moved
 	case sf::Event::EventType::MouseMoved:
 	{
 		// get the ID of the button currently being hovered over
@@ -120,4 +120,8 @@ size_t MainMenuState::getHoveredButtonID() {
 	}
 
 	return -1;
+}
+
+void MainMenuState::renderGUI(float dt) {
+	ImGui::ShowDemoWindow();
 }

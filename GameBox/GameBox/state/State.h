@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "entityx/entityx.h"
+#include "imgui/imgui.h"
 
 // Forward declare the StateStack
 class StateStack;
@@ -28,6 +29,8 @@ public:
 	virtual void processInput(float dt) = 0;
 	// Updates the state - runs every frame
 	virtual void update(float dt) = 0;
+	// called last in the frame
+	virtual void renderGUI(float dt) = 0;
 
 protected:
 	Game* m_game;

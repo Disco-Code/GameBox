@@ -14,6 +14,7 @@ public:
 	void update(float dt) override;
 	void processInput(float dt) override;
 	virtual void handleWindowEvent(const sf::Event& windowEvent) override;
+	virtual void renderGUI(float dt) override;
 private:
 	/*
 		Returns the ID of the button currently being hovered over by the mouse, or -1 if no button is being hovered over

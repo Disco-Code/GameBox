@@ -15,6 +15,7 @@ public:
 	void processInput(float dt) override;
 
 	virtual void handleWindowEvent(const sf::Event& windowEvent) override;
+	virtual void renderGUI(float dt) override;
 
 private:
 

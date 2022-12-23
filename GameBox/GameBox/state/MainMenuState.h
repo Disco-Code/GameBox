@@ -17,9 +17,13 @@ public:
 	virtual void handleWindowEvent(const sf::Event& windowEvent) override;
 	virtual void renderGUI(float dt) override;
 private:
+	// Attempts to join a server at the specified IP address and port number.
 	void joinServer(std::string ip, unsigned int port = 0);
+	// Saves the list of saved servers to a file
 	void saveIPs();
+	// Loads a list of saved server IP addresses from a file, and adds them to the list of saved servers
 	void loadIPs();
+	// Adds a server to the list of saved servers, if it is not a duplicate
 	void addServerToList(std::string serverAddress);
 	void renderServerList();
 	/*
@@ -34,6 +38,7 @@ private:
 	sf::Sprite m_logoSprite;
 
 	//ServerList
+	char m_playerName[32] = "Player";
 	bool m_bIsServerListOpen = false;
 	std::string m_joinErrorMessage = "";
 	std::vector<std::string> m_savedIPs;

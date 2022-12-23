@@ -181,6 +181,7 @@
     <ClCompile Include="ECS\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="ECS\Systems\TextSystem.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="Networking\Game-Layer\NetworkConnection.cpp" />
     <ClCompile Include="Networking\Game-Layer\TCP-Layer\Network-Module\NetworkModule.cpp" />
     <ClCompile Include="state\Common UI\Button.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="events\Networking\NetworkEvents.h" />
     <ClInclude Include="events\ScoreEvent.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="Networking\Game-Layer\NetworkConnection.h" />
     <ClInclude Include="Networking\Game-Layer\TCP-Layer\Network-Module\NetworkModule.hpp" />
     <ClInclude Include="Networking\Game-Layer\TCP-Layer\Network-Module\NetworkStructs.hpp" />

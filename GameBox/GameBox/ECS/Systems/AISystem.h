@@ -3,6 +3,8 @@
 #include "SFML/Graphics/CircleShape.hpp"
 #include "../../events/ClickActionEvent.h"
 #include "SFML/Graphics/RenderWindow.hpp"
+#include "SFML/Graphics/Sprite.hpp"
+#include "../../TextureHandler.h"
 #include <list>
 
 //namespace sf {
@@ -23,9 +25,17 @@ struct AIComponent
 	// Ball entity
 	AI::State state = AI::State::IDLE;
 	sf::Vector2f targetPos;
+	entityx::Entity targetEntity;
 	float speed = 100.0f;
-	float attackspeed = 3.0f;
+	float attackspeed = 1.0f;
+	float coolDownTimer = 0.0f; // used in state machine
 	std::vector<sf::Vector2f> targetPosVector;
+	uint32_t attackRange = 10.0f;
+
+	//Stats
+	uint32_t maxHealth = 3;
+	uint32_t currentHealth = maxHealth;
+	uint32_t damage = 1;
 };
 
 // Put the map here until i figure out a better place
@@ -236,7 +246,7 @@ public:
 
 	void Solve_AStar(sf::Vector2f startPos, sf::Vector2f targetPos, std::vector<sf::Vector2f>& posVector) {
 
-		// Determine start end end node from the start and target postition
+		// Determine start and end node from the start and target postition
 		sf::Vector2i selectedStartNode = getClosestNodeFromPos(startPos);
 		nodeStart = &nodes[selectedStartNode.y * nManHeight + selectedStartNode.x];
 
@@ -360,6 +370,9 @@ public:
 
 
 private:
+
+	void Walk(entityx::EntityManager& es, entityx::Entity entity, AIComponent& aicomponent, sf::Sprite& sprite, entityx::TimeDelta dt);
+	
 	sf::RenderWindow* m_window;
 	entityx::EntityManager* m_entitymanager;
 	entityx::EventManager* m_eventmanager;

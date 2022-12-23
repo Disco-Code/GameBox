@@ -152,9 +152,6 @@ void GameState::handleWindowEvent(const sf::Event& windowEvent) {
 				auto translated_pos = m_game->getWindow()->mapPixelToCoords(sf::Mouse::getPosition(*m_game->getWindow()));
 				systems.system<PickingSystem>().get()->clickRight(entities, events, translated_pos);
 
-				//m_playerEntity.component<AIComponent>().get()->state = AI::State::WALKING;
-				//m_playerEntity.component<AIComponent>().get()->targetPos = translated_pos;
-
 			}
 
 			break;

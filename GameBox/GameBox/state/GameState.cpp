@@ -26,6 +26,7 @@ void GameState::update(float dt) {
 	systems.update<TargetingSystem>(dt);
 	systems.update<BallSystem>(dt);
 	systems.update<AISystem>(dt);
+	systems.update<LifeTimeSystem>(dt);
 
 	systems.update<SpriteRenderSystem>(dt);
 	systems.update<ShapeRenderSystem>(dt);
@@ -148,6 +149,24 @@ void GameState::handleWindowEvent(const sf::Event& windowEvent) {
 
 			if (windowEvent.type == 9) {
 				std::cout << "Rightcluck" << std::endl;
+				auto clickFeedback = entities.create();
+				auto spriteComp = clickFeedback.assign<sf::Sprite>().get();
+				auto lifetimeComp = clickFeedback.assign<LifeTimeComponent>().get();
+				lifetimeComp->initialLifetime = 2;
+				lifetimeComp->lifeTime = 2;
+				spriteComp->setTexture(TextureHandler::getInstance().getTexture("../Resources/mouseclick.png"));
+
+				auto bounds = spriteComp->getGlobalBounds();
+				auto position = m_game->getWindow()->mapPixelToCoords(sf::Mouse::getPosition(*m_game->getWindow()));
+				position.x -= bounds.width / 2;
+				position.y -= bounds.height / 2;
+
+				//spriteComp->setColor(sf::Color::Blue);
+				//spriteComp->setScale(5f, 0.25f);
+
+				spriteComp->setPosition(position);
+
+
 
 				auto translated_pos = m_game->getWindow()->mapPixelToCoords(sf::Mouse::getPosition(*m_game->getWindow()));
 				systems.system<PickingSystem>().get()->clickRight(entities, events, translated_pos);
@@ -227,6 +246,7 @@ void GameState::initializeSystems() {
 	systems.add<TextSystem>(m_game->getWindow(), events);
 	systems.add<PickingSystem>();
 	systems.add<CollisionSystem>();
+	systems.add<LifeTimeSystem>();
 
 	auto animationSystem = systems.add<AnimationSystem>();
 	systems.add<ShapeRenderSystem>(m_game);

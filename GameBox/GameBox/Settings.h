@@ -35,7 +35,7 @@ public:
 	void Load();
 
 	// Returns the player's name.
-	const std::string& GetPlayerName() const;
+	const std::string& GetPlayerName();
 	// Sets the player's name.
 	void SetPlayerName(const std::string& name);
 	void SetPlayerName(const char* name);
@@ -43,7 +43,8 @@ public:
 	// Returns the path to the settings file.
 	std::filesystem::path GetSettingsFilePath();
 
+	void RandomizePlayerName();
 private:
 	// Player's name setting.
-	SETTING_STRING(m_playerName, "PlayerName", "player"); //This might be an to overly complicated way of creating the two variables named m_playerName and m_playerName_disp. m_playerName get assigned "player" and m_playerName_disp will be assigned "PlayerName".
+	SETTING_STRING(m_playerName, "PlayerName", ""); //This might be an to overly complicated way of creating the two variables named m_playerName and m_playerName_disp. m_playerName get assigned "player" and m_playerName_disp will be assigned "PlayerName".
 };

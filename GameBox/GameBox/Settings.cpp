@@ -1,11 +1,35 @@
 #include "Settings.h"
 #include <fstream>
+#include <random>
 
 // SAVE_SETTING is a macro that writes a setting and its value to a stream.
 // It takes the name of the setting (varName) and a stream (stream) as arguments.
 // The macro writes the setting's display name (varName_disp), followed by a colon and the setting's value (varName).
 // It also adds a newline character at the end.
 #define SAVE_SETTING(varName, stream) stream << varName##_##disp << ":" << varName << "\n"
+
+static const int NUM_RANDOM_USERNAMES = 20;
+std::string m_usernames[NUM_RANDOM_USERNAMES] = {
+	"ObamaDoge",
+	"PepeGates",
+	"JobsGonnaTellMyKids",
+	"TrollfaceBieber",
+	"ForeverAloneJackson",
+	"YOLOMadonna",
+	"SpongeGarLennon",
+	"ThisIsFineMouseTrump",
+	"PeanutButterJellyTimeLopez",
+	"GrumpyCatPfeiffer",
+	"PhilosoraptorDarwin",
+	"CondescendingEinstein",
+	"OneDoesNotSimplyShakespeare",
+	"StonksGates",
+	"BadLuckGalileo",
+	"MemeLordMaximusDaVinci",
+	"HarambeNapoleon",
+	"AristotleDatBoi",
+	"MockingSpongeBobPlato"
+};
 
 Settings::Settings() {
 
@@ -60,7 +84,11 @@ void Settings::Load() {
 	}
 }
 
-const std::string& Settings::GetPlayerName() const {
+const std::string& Settings::GetPlayerName() {
+	if (m_playerName == "") {
+		RandomizePlayerName();
+	}
+
 	return m_playerName;
 }
 
@@ -77,4 +105,16 @@ std::filesystem::path Settings::GetSettingsFilePath() {
 	auto path = G_CONFIG_PATH.string() + "/" + G_SETTINGS_FILENAME.string();
 	// Return the full path to the settings file.
 	return path;
+}
+
+void Settings::RandomizePlayerName() {
+	// Initialize a random number generator
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
+	// Randomly select a name from the list
+	std::uniform_int_distribution<> name_dist(0, NUM_RANDOM_USERNAMES - 1);
+	int name_idx = name_dist(gen);
+	m_playerName = m_usernames[name_idx];
+	int i = 0;
 }

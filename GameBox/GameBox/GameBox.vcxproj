@@ -184,6 +184,7 @@
     <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="Networking\Game-Layer\NetworkConnection.cpp" />
     <ClCompile Include="Networking\Game-Layer\TCP-Layer\Network-Module\NetworkModule.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="state\Common UI\Button.cpp" />
     <ClCompile Include="state\Lobby\LobbyState.cpp" />
     <ClCompile Include="state\GameState.cpp" />
@@ -194,6 +195,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="state\SettingsMenuState.cpp" />
     <ClCompile Include="state\State.cpp" />
     <ClCompile Include="TextureHandler.cpp" />
     <ClCompile Include="thirdparty\imgui\imgui-SFML.cpp" />
@@ -224,10 +226,12 @@
     <ClInclude Include="Networking\Game-Layer\NetworkConnection.h" />
     <ClInclude Include="Networking\Game-Layer\TCP-Layer\Network-Module\NetworkModule.hpp" />
     <ClInclude Include="Networking\Game-Layer\TCP-Layer\Network-Module\NetworkStructs.hpp" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="state\Common UI\Button.h" />
     <ClInclude Include="state\Lobby\LobbyState.h" />
     <ClInclude Include="state\GameState.h" />
     <ClInclude Include="state\MainMenuState.h" />
+    <ClInclude Include="state\SettingsMenuState.h" />
     <ClInclude Include="state\State.h" />
     <ClInclude Include="TextureHandler.h" />
     <ClInclude Include="thirdparty\imgui\imconfig-SFML.h" />

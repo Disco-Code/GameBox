@@ -79,7 +79,7 @@ void NetworkConnection::handleNetworkEvents(NetworkEvent event) {
 				NETWORK_GAMELAYER_EVENT playerJoined = {};
 				playerJoined.type = NETWORK_GAMELAYER_EVENT_TYPE::PLAYER_JOINED;
 
-				memcpy_s(playerJoined.event_data.player_joined.name, MAX_PLAYER_NAME_LENGTH, i.playerName.c_str(), i.playerName.size());
+				memcpy_s(playerJoined.event_data.player_joined.name, NETWORK_MAX_PLAYER_NAME_LENGTH, i.playerName.c_str(), i.playerName.size());
 				playerJoined.event_data.player_joined.playerID = id++;
 
 				m_networkModule.send(reinterpret_cast<char*>(&playerJoined), sizeof(NETWORK_GAMELAYER_EVENT), event.clientID);
@@ -88,7 +88,7 @@ void NetworkConnection::handleNetworkEvents(NetworkEvent event) {
 			NETWORK_GAMELAYER_EVENT playerJoined = {};
 			playerJoined.type = NETWORK_GAMELAYER_EVENT_TYPE::PLAYER_JOINED;
 
-			memcpy_s(playerJoined.event_data.player_joined.name, MAX_PLAYER_NAME_LENGTH, "Client", 6);
+			memcpy_s(playerJoined.event_data.player_joined.name, NETWORK_MAX_PLAYER_NAME_LENGTH, "Client", 6);
 			playerJoined.event_data.player_joined.playerID = 0;
 
 			m_networkModule.send(reinterpret_cast<char*>(&playerJoined), sizeof(NETWORK_GAMELAYER_EVENT));
@@ -138,7 +138,7 @@ void NetworkConnection::handleGameLayerNetworkEvents(NETWORK_GAMELAYER_EVENT& ev
 			NETWORK_GAMELAYER_EVENT playerJoined = {};
 			playerJoined.type = NETWORK_GAMELAYER_EVENT_TYPE::PLAYER_JOINED;
 
-			memcpy_s(playerJoined.event_data.player_joined.name, MAX_PLAYER_NAME_LENGTH, player.playerName.c_str(), player.playerName.size());
+			memcpy_s(playerJoined.event_data.player_joined.name, NETWORK_MAX_PLAYER_NAME_LENGTH, player.playerName.c_str(), player.playerName.size());
 			playerJoined.event_data.player_joined.playerID = player.playerID;
 
 			m_networkModule.send(reinterpret_cast<char*>(&playerJoined), sizeof(NETWORK_GAMELAYER_EVENT), -1);

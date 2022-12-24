@@ -13,7 +13,8 @@ namespace States {
 		None,
 		MainMenu,
 		Game,
-		Lobby
+		Lobby,
+		SettingsMenu,
 	};
 }
 

@@ -8,7 +8,7 @@
 #include <string>
 #include <chrono>
 
-constexpr unsigned int MAX_PLAYER_NAME_LENGTH = 31;
+constexpr unsigned int NETWORK_MAX_PLAYER_NAME_LENGTH = 31;
 constexpr unsigned int MAX_CHAT_MESSAGE_LENGTH = 62;
 
 struct ConnectionInfo {
@@ -43,7 +43,7 @@ struct NETWORK_GAMELAYER_EVENT {
 	union {
 		struct {
 			char playerID;
-			char name[MAX_PLAYER_NAME_LENGTH];
+			char name[NETWORK_MAX_PLAYER_NAME_LENGTH];
 		} player_joined;
 		struct {
 			char playerID;
@@ -57,7 +57,7 @@ struct NETWORK_GAMELAYER_EVENT {
 		} request_state_change;
 		struct {
 			char senderID;
-			char name[MAX_PLAYER_NAME_LENGTH];
+			char name[NETWORK_MAX_PLAYER_NAME_LENGTH];
 		} player_name_change;
 	} event_data;
 };

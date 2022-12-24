@@ -23,7 +23,7 @@ MainMenuState::MainMenuState(Game* pGame) : State(States::MainMenu, pGame) {
 	m_buttons.back().setPosition(posX, posY);
 	posY += 50;
 
-	m_buttons.push_back(Button("Settings (not implemented)", pGame->GetFont(), [&]() {printf("MainMenu: \"Settings\" Button Pressed!\n"); }));
+	m_buttons.push_back(Button("Settings", pGame->GetFont(), [&]() {printf("MainMenu: \"Settings\" Button Pressed!\n"); m_game->SetState(States::SettingsMenu);  }));
 	m_buttons.back().setPosition(posX, posY);
 	posY += 50;
 
@@ -247,8 +247,10 @@ void MainMenuState::renderServerList() {
 	// Begin the server list window, with no collapse, move, resize, or saved settings
 	ImGui::Begin("Server List", &m_bIsServerListOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
 
-	if (ImGui::InputText("Display Name", m_playerName, sizeof(m_playerName))) {
-	}
+	ImGui::TextUnformatted("Your Name:");
+	ImGui::SameLine();
+	ImGui::TextUnformatted(m_game->GetSettingsConst().GetPlayerName().c_str());
+
 	ImGui::Separator();
 	// Create a button to join the currently selected server
 	if (ImGui::Button("Join")) {

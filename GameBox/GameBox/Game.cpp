@@ -3,11 +3,13 @@
 #include "state/GameState.h"
 #include "state/MainMenuState.h"
 #include "state/Lobby/LobbyState.h"
+#include "state/SettingsMenuState.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui-SFML.h"
 
 Game::Game() : m_window(sf::VideoMode(1600, 800), "Gamebox setup test") {
+	m_settings.Load();
 	m_font.loadFromFile("../Resources/Arcon-Regular.otf");
 	m_currentState = new MainMenuState(this);
 	m_networkConnection.Initialize(&m_eventManager);
@@ -17,6 +19,8 @@ Game::Game() : m_window(sf::VideoMode(1600, 800), "Gamebox setup test") {
 }
 
 Game::~Game() {
+	m_settings.Save();
+
 	if (m_currentState) {
 		delete m_currentState;
 	}
@@ -69,6 +73,9 @@ void Game::SetState(States::ID id) {
 	case States::Lobby:
 		m_nextState = new LobbyState(this);
 		break;
+	case States::SettingsMenu:
+		m_nextState = new SettingsMenuState(this);
+		break;
 	default:
 		break;
 	}
@@ -80,6 +87,14 @@ sf::RenderWindow* Game::getWindow() {
 
 sf::Font& Game::GetFont() {
 	return m_font;
+}
+
+const Settings& Game::GetSettingsConst() const {
+	return m_settings;
+}
+
+Settings& Game::GetSettings() {
+	return m_settings;
 }
 
 void Game::ApplyNextState() {

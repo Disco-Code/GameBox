@@ -249,7 +249,7 @@ void MainMenuState::renderServerList() {
 
 	ImGui::TextUnformatted("Your Name:");
 	ImGui::SameLine();
-	ImGui::TextUnformatted(m_game->GetSettingsConst().GetPlayerName().c_str());
+	ImGui::TextUnformatted(m_game->GetSettings().GetPlayerName().c_str());
 
 	ImGui::Separator();
 	// Create a button to join the currently selected server

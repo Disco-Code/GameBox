@@ -1,6 +1,7 @@
 #pragma once
 
 #include "state/State.h"
+#include "Settings.h"
 
 class Game {
 public:
@@ -13,6 +14,10 @@ public:
 
 	sf::RenderWindow* getWindow();
 	sf::Font& GetFont();
+
+	const Settings& GetSettingsConst() const;
+	Settings& GetSettings();
+
 private:
 	void ApplyNextState();
 	sf::RenderWindow m_window;
@@ -22,4 +27,6 @@ private:
 
 	State* m_currentState = nullptr;
 	State* m_nextState = nullptr;
+
+	Settings m_settings;
 };

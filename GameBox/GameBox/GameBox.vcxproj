@@ -30,26 +30,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -170,7 +170,6 @@
     <ClCompile Include="ECS\Systems\FollowTargetSystem.cpp" />
     <ClCompile Include="ECS\Systems\PickingSystem.cpp" />
     <ClCompile Include="ECS\Systems\ShapeRenderSystem.cpp" />
-    <ClCompile Include="ECS\Systems\LifeTimeSystem.cpp" />
     <ClCompile Include="ECS\Systems\SpriteAnimationSystem.cpp" />
     <ClCompile Include="ECS\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="ECS\Systems\TextSystem.cpp" />
@@ -193,7 +192,6 @@
     <ClInclude Include="ECS\Systems\BallSystem.h" />
     <ClInclude Include="ECS\Systems\CollisionSystem.h" />
     <ClInclude Include="ECS\Systems\FollowTargetSystem.h" />
-    <ClInclude Include="ECS\Systems\LifeTimeSystem.h" />
     <ClInclude Include="ECS\Systems\PickingSystem.h" />
     <ClInclude Include="ECS\Systems\ShapeRenderSystem.h" />
     <ClInclude Include="ECS\Systems\SpriteAnimationSystem.h" />

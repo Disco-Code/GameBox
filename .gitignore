@@ -9,6 +9,11 @@
 *.userosscache
 *.sln.docstates
 
+# Imgui
+imgui.ini
+#Game config files
+**/[Cc]onfig/*.*
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -328,3 +333,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+

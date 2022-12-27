@@ -15,7 +15,7 @@ MainMenuState::MainMenuState(Game* pGame) : State(States::MainMenu, pGame) {
 	m_buttons.back().setPosition(posX, posY);
 	posY += 50;
 
-	m_buttons.push_back(Button("Settings (not implemented)", pGame->GetFont(), [&]() {printf("MainMenu: \"Settings\" Button Pressed!\n"); }));
+	m_buttons.push_back(Button("Settings", pGame->GetFont(), [&]() {printf("MainMenu: \"Settings\" Button Pressed!\n"); m_game->SetState(States::SettingsMenu);  }));
 	m_buttons.back().setPosition(posX, posY);
 	posY += 50;
 
@@ -87,7 +87,7 @@ void MainMenuState::handleWindowEvent(const sf::Event& windowEvent) {
 		}
 		break;
 	}
-		// case for when the mouse is moved
+	// case for when the mouse is moved
 	case sf::Event::EventType::MouseMoved:
 	{
 		// get the ID of the button currently being hovered over
@@ -120,4 +120,8 @@ size_t MainMenuState::getHoveredButtonID() {
 	}
 
 	return -1;
+}
+
+void MainMenuState::renderGUI(float dt) {
+	ImGui::ShowDemoWindow();
 }

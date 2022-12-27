@@ -18,130 +18,100 @@ AISystem::~AISystem()
 
 void AISystem::update(entityx::EntityManager& es, entityx::EventManager& events, entityx::TimeDelta dt)
 {
+
+	// AI stage machine loop
 	es.each<AIComponent, sf::Sprite>([&](entityx::Entity entity, AIComponent& aicomponent, sf::Sprite& sprite) {
 
-		/*if (aicomponent.ball.valid()) {
-			if (aicomponent.ball.has_component<sf::Sprite>()) {
-				entityx::ComponentHandle<sf::Sprite> spriteCompHND;
-				es.unpack<sf::Sprite>(aicomponent.ball.id(), spriteCompHND);
-				
-
-				if (spriteCompHND.get()->getPosition().y < sprite.getPosition().y + sprite.getGlobalBounds().width * 0.4f)
-				{
-					sprite.move(0, -dt * 600);
-					if (sprite.getPosition().y < 0)
-					{
-						sprite.setPosition(sprite.getPosition().x, 0.0f);
-					}
-				}
-				else if (spriteCompHND.get()->getPosition().y > sprite.getPosition().y - sprite.getGlobalBounds().width * 0.4f)
-				{
-					sprite.move(0, dt * 600);
-					if (sprite.getPosition().y > m_window->getSize().y - sprite.getGlobalBounds().height)
-					{
-						sprite.setPosition(sprite.getPosition().x, m_window->getSize().y - sprite.getGlobalBounds().height);
-					}
-				}
-			}
-		}*/
-
-
-		sf::Vector2f dir;
-		float length;
-		sf::Vector2f targPos;
-
-		switch (aicomponent.state)
+		if (aicomponent.coolDownTimer <= 0)
 		{
-		case AI::State::IDLE:
-			//std::cout << "idle" << std::endl;
-			//sprite.setColor(sf::Color::White);
-			break;
-		case AI::State::WALKING:
-
-			//sprite.setColor(sf::Color::Blue);
-			if (aicomponent.targetPosVector.empty())
+			switch (aicomponent.state)
 			{
-				aicomponent.state = AI::State::IDLE;
+			case AI::State::IDLE:
+
 				break;
-			}
-			
-			// Get direction
-			targPos = aicomponent.targetPosVector.back();
-			dir = targPos - sprite.getPosition();
-			// Normalize
-			length = sqrtf(dir.x * dir.x + dir.y * dir.y);
-			if (length > 5.0f)
+			case AI::State::WALKING:
+
+				Walk(es, entity, aicomponent, sprite, dt);
+				break;
+
+			case AI::State::ATTACKING:
 			{
-				dir.x = dir.x / length;
-				dir.y = dir.y / length;
-				//std::cout << dir.y << std::endl;
-				// Move
-				float totalSpeed = (float)(aicomponent.speed * dt);
-				//std::cout << totalSpeed << std::endl;
-
-				sprite.move(dir.x * totalSpeed, dir.y * totalSpeed);
-
-
-				es.each<CollisionComponent, sf::Sprite>([&](entityx::Entity testedEntity, const CollisionComponent& collisionComponent, const sf::Sprite& testedSprite) {
-
-					if (sprite.getGlobalBounds().intersects(testedSprite.getGlobalBounds()) && entity != testedEntity) {
-						
-						sprite.move(-dir.x * totalSpeed, -dir.y * totalSpeed);
-						/*int i = 0;
-						do
-						{
-							switch (i)
-							{
-							case 0:
-								sprite.move(dir.x * totalSpeed, 0);
-								break;
-							case 1:
-								sprite.move(0, dir.y * totalSpeed);
-								break;
-							case 2:
-								sprite.move(-dir.x * totalSpeed, 0);
-								break;
-							case 3:
-								sprite.move(0, -dir.y * totalSpeed);
-								break;
-							default:
-								break;
-							}
-							sprite.move(-dir.x * totalSpeed, -dir.y * totalSpeed);
-							i++;
-						} while (sprite.getGlobalBounds().intersects(testedSprite.getGlobalBounds()) && i < 4);*/
-						//std::cout << "Collision!!" << std::endl;
-					}
-					});
-			}
-			else
-			{
-				//aicomponent.targetPos = sf::Vector2f(0, 0);
-				aicomponent.targetPosVector.pop_back();
-				if (aicomponent.targetPosVector.empty())
+				if (!aicomponent.targetEntity.valid())
 				{
 					aicomponent.state = AI::State::IDLE;
+					sprite.setTexture(TextureHandler::getInstance().getTexture("../Resources/cubeman.png"));
+					if (entity.has_component<SelectedComponent>())
+					{
+						sprite.setColor(sf::Color::Blue);
+					}
+					else
+					{
+						sprite.setColor(sf::Color::White);
+					}
+					return;
 				}
+
+				// Calculate the distance between units
+				sf::Sprite* targetSprite = aicomponent.targetEntity.component<sf::Sprite>().get();
+				sf::Vector2f spriteCenter = sf::Vector2f(sprite.getPosition().x + sprite.getGlobalBounds().width / 2,
+					sprite.getPosition().y + sprite.getGlobalBounds().height / 2);
+				sf::Vector2f targetCenter = sf::Vector2f(targetSprite->getPosition().x + targetSprite->getGlobalBounds().width / 2,
+					targetSprite->getPosition().y + targetSprite->getGlobalBounds().height / 2);
+
+				sf::Vector2f deltaVec = spriteCenter - targetCenter;
+				float realDistance = sqrtf(deltaVec.x * deltaVec.x + deltaVec.y * deltaVec.y)
+					- (sprite.getGlobalBounds().width + targetSprite->getGlobalBounds().width) / 2.0f;
+
+				// Compare the distance with the attack range
+				if (realDistance < aicomponent.attackRange)
+				{
+					aicomponent.coolDownTimer = aicomponent.attackspeed;
+					
+					AIComponent* aicomp = aicomponent.targetEntity.component<AIComponent>().get();
+					aicomp->currentHealth -= aicomponent.damage;
+					if (aicomp->currentHealth <= 0)
+					{
+						aicomponent.targetEntity.destroy();
+						aicomponent.state = AI::State::IDLE;
+						sprite.setTexture(TextureHandler::getInstance().getTexture("../Resources/cubeman.png"));
+						if (entity.has_component<SelectedComponent>())
+						{
+							sprite.setColor(sf::Color::Blue);
+						}
+						else
+						{
+							sprite.setColor(sf::Color::White);
+						}
+					}
+				}
+				else if (aicomponent.targetPosVector.empty())
+				{
+
+					aicomponent.targetPosVector.clear();
+					Astar.Solve_AStar(entity.component<sf::Sprite>().get()->getPosition(),
+						aicomponent.targetEntity.component<sf::Sprite>().get()->getPosition(), aicomponent.targetPosVector);
+				}
+				else
+				{
+					aicomponent.targetPos = aicomponent.targetEntity.component<sf::Sprite>()->getPosition();
+					Walk(es, entity, aicomponent, sprite, dt);
+				}
+			}
+
+			default:
 				break;
 			}
-			
-
-			break;
-
-		case AI::State::ATTACKING:
-
-
-		default:
-			break;
 		}
-
+		else
+		{
+			aicomponent.coolDownTimer = aicomponent.coolDownTimer - dt;
+		}
 	});
 
 
 	// Update all things that are supposed to follow the cursor
 	sf::Vector2i selectedNode = Astar.getClosestNodeFromPos(m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window)));
 	sf::Vector2f pos = Astar.getNodeRelativeDistance();
-
 	es.each<FollowMouseComponent, sf::Sprite>([&](entityx::Entity entity, const FollowMouseComponent& followComp, sf::Sprite& sprite) {
 		sprite.setPosition(selectedNode.x * pos.x, selectedNode.y * pos.y);
 	});
@@ -190,24 +160,52 @@ void AISystem::update(entityx::EntityManager& es, entityx::EventManager& events,
 
 void AISystem::receive(const ClickActionEvent& event)
 {
-	m_entitymanager->each<AIComponent, SelectedComponent>([&](entityx::Entity entity, AIComponent& aicomponent, const SelectedComponent& selectedcomp) {
 
-		auto& comp = *entity.component<AIComponent>().get();
-		comp.state = AI::State::WALKING;
-		//comp.targetPos = event.mousePos;
-		while (!comp.targetPosVector.empty())
+	entityx::Entity targetEntity;
+
+	for (entityx::Entity entity : m_entitymanager->entities_with_components<sf::Sprite, SelectableComponent>())
+	{
+		entityx::ComponentHandle<sf::Sprite> sprite = entity.component<sf::Sprite>();
+		if (sprite->getGlobalBounds().contains(event.mousePos))
 		{
-			comp.targetPosVector.pop_back();
+			targetEntity = entity;
+			break;
 		}
-		
-		//comp.targetPosVector.push_back(sf::Vector2f(event.mousePos));
-		// 
-		//entity.component<sf::Sprite>().get()->setColor(sf::Color::Blue);
-		
-		
-		Astar.Solve_AStar(entity.component<sf::Sprite>().get()->getPosition(), event.mousePos, comp.targetPosVector);
+	}
 
-		});
+	if (targetEntity.valid())
+	{
+		m_entitymanager->each<SelectedComponent, AIComponent, sf::Sprite>([&](entityx::Entity entity, SelectedComponent& selectedComp, AIComponent& AIComp, sf::Sprite& sprite) {
+			if (entity != targetEntity)
+			{
+				AIComp.state = AI::State::ATTACKING;
+				sprite.setTexture(TextureHandler::getInstance().getTexture("../Resources/cubemanAngry.png"));
+				sprite.setColor(sf::Color::Red);
+				AIComp.targetEntity = targetEntity;
+				// Empty the vector
+				AIComp.targetPosVector.clear();
+				Astar.Solve_AStar(entity.component<sf::Sprite>().get()->getPosition(), 
+					AIComp.targetEntity.component<sf::Sprite>().get()->getPosition(), AIComp.targetPosVector);
+			}
+			});
+	}
+	else
+	{
+		m_entitymanager->each<AIComponent, SelectedComponent, sf::Sprite>([&](entityx::Entity entity, AIComponent& aicomponent, const SelectedComponent& selectedcomp, sf::Sprite& sprite) {
+
+			auto& comp = *entity.component<AIComponent>().get();
+			comp.state = AI::State::WALKING;
+			sprite.setTexture(TextureHandler::getInstance().getTexture("../Resources/cubeman.png"));
+			sprite.setColor(sf::Color::Blue);
+
+			// Empty the vector
+			comp.targetPosVector.clear();
+			Astar.Solve_AStar(entity.component<sf::Sprite>().get()->getPosition(), event.mousePos, comp.targetPosVector);
+
+			});
+	}
+
+	
 }
 
 void AISystem::tempClickTest(const sf::Vector2f& mousePos)
@@ -251,5 +249,54 @@ void AISystem::DrawNodes()
 	if (Astar.drawNodes)
 	{
 		Astar.DrawNodes();
+	}
+}
+
+void AISystem::Walk(entityx::EntityManager& es, entityx::Entity entity, AIComponent& aicomponent, sf::Sprite& sprite, entityx::TimeDelta dt)
+{
+	sf::Vector2f dir;
+	float length;
+	sf::Vector2f targPos;
+	//sprite.setColor(sf::Color::Blue);
+	if (aicomponent.targetPosVector.empty())
+	{
+		aicomponent.state = AI::State::IDLE;
+		sprite.setTexture(TextureHandler::getInstance().getTexture("../Resources/cubeman.png"));
+		if (!entity.has_component<SelectedComponent>())
+		{
+			sprite.setColor(sf::Color::White);
+		}
+		return;
+	}
+
+	// Get direction
+	targPos = aicomponent.targetPosVector.back();
+	dir = targPos - sprite.getPosition();
+	// Normalize
+	length = sqrtf(dir.x * dir.x + dir.y * dir.y);
+	if (length > 5.0f)
+	{
+		dir.x = dir.x / length;
+		dir.y = dir.y / length;
+		//std::cout << dir.y << std::endl;
+		// Move
+		float totalSpeed = (float)(aicomponent.speed * dt);
+		//std::cout << totalSpeed << std::endl;
+
+		sprite.move(dir.x * totalSpeed, dir.y * totalSpeed);
+
+
+		/*es.each<CollisionComponent, sf::Sprite>([&](entityx::Entity testedEntity, const CollisionComponent& collisionComponent, const sf::Sprite& testedSprite) {
+
+			if (sprite.getGlobalBounds().intersects(testedSprite.getGlobalBounds()) && entity != testedEntity) {
+
+				sprite.move(-dir.x * totalSpeed, -dir.y * totalSpeed);
+
+			}
+			});*/
+	}
+	else
+	{
+		aicomponent.targetPosVector.pop_back();
 	}
 }

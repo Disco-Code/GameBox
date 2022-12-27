@@ -15,11 +15,25 @@ void PickingSystem::update(entityx::EntityManager& es, entityx::EventManager& ev
 }
 
 void PickingSystem::clickLeft(entityx::EntityManager& es, entityx::EventManager& events, const sf::Vector2f& mousePos, bool shiftclick) {
+	
 	// If shiftclick is false, deselect all previously selected entities.
 	if (!shiftclick) {
 		es.each<SelectedComponent, sf::Sprite>([&](entityx::Entity entity, SelectedComponent& selectedComp, sf::Sprite& sprite) {
 			entity.remove<SelectedComponent>();
-			sprite.setColor(sf::Color::White);
+			if (sprite.getColor() == sf::Color::Blue)
+			{
+				if (entity.has_component<AIComponent>())
+				{
+					if (entity.component<AIComponent>().get()->state != AI::State::ATTACKING)
+					{
+						sprite.setColor(sf::Color::White);
+					}
+				}
+				else
+				{
+					sprite.setColor(sf::Color::White);
+				}
+			}
 			});
 	}
 
@@ -73,32 +87,17 @@ void PickingSystem::selectEntitiesInArea(entityx::EntityManager& es, entityx::Ev
 }
 
 void PickingSystem::clickRight(entityx::EntityManager& es, entityx::EventManager& events, const sf::Vector2f& mousePos) {
-	// Loop each sprite to find the target
 
-	//es.each<sf::Sprite>([&](entityx::Entity entity, sf::Sprite& sprite) {
-
-	//	//std::cout << "mouse posinside: " << mouseEvent.mouseButton.x << " " << mouseEvent.mouseButton.y << std::endl;
-
-
-	//	if (sprite.getGlobalBounds().contains(mousePos))
-	//	{
-	//		auto playerSprite = entity.component<sf::Sprite>().get();
-	//		playerSprite->setColor(sf::Color::Blue);
-	//		//sprite.setColor(sf::Color::Blue);
-	//	}
-
-	//	});
-
-	es.each<FollowMouseComponent, sf::Sprite>([&](entityx::Entity entity, FollowMouseComponent& selectedComp, sf::Sprite& sprite) {
+	// While in "building mode", cancel the ghost model with rightclick
+	es.each<FollowMouseComponent, sf::Sprite>([&](entityx::Entity entity, FollowMouseComponent& followMouseComp, sf::Sprite& sprite) {
 		entity.destroy();
 		m_isBlueprintActive = false;
-	});
+		});
 
 	ClickActionEvent data;
 	data.mousePos = mousePos;
 
 	events.emit<ClickActionEvent>(data);
-
 }
 
 bool const PickingSystem::getIsBlueprintActive()

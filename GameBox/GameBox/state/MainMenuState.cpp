@@ -15,7 +15,7 @@ MainMenuState::MainMenuState(Game* pGame) : State(States::MainMenu, pGame) {
 	m_buttons.back().setPosition(posX, posY);
 	posY += 50;
 
-	m_buttons.push_back(Button("Settings (not implemented)", pGame->GetFont(), [&]() {printf("MainMenu: \"Settings\" Button Pressed!\n"); }));
+	m_buttons.push_back(Button("Settings", pGame->GetFont(), [&]() {printf("MainMenu: \"Settings\" Button Pressed!\n"); m_game->SetState(States::SettingsMenu);  }));
 	m_buttons.back().setPosition(posX, posY);
 	posY += 50;
 

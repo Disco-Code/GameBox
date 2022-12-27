@@ -11,6 +11,8 @@
 
 # Imgui
 imgui.ini
+#Game config files
+**/[Cc]onfig/*.*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

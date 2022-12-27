@@ -67,7 +67,7 @@ void GameState::handleWindowEvent(const sf::Event& windowEvent) {
 			m_game->SetState(States::MainMenu);
 		}
 		if (windowEvent.key.code == sf::Keyboard::Q) {
-			if (!systems.system<PickingSystem>().get()->getIsBlueprintActive()) 			{
+			if (!systems.system<PickingSystem>().get()->getIsBlueprintActive()) {
 				auto ent = entities.create();
 				auto spriteComp = ent.assign<sf::Sprite>().get();
 				spriteComp->setPosition(m_game->getWindow()->mapPixelToCoords(sf::Mouse::getPosition(*m_game->getWindow())));

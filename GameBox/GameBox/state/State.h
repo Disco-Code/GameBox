@@ -12,7 +12,8 @@ namespace States {
 	enum ID : char {
 		None,
 		MainMenu,
-		Game
+		Game,
+		SettingsMenu,
 	};
 }
 

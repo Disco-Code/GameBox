@@ -8,3 +8,4 @@
 #include "Systems/PickingSystem.h"
 #include "Systems/CollisionSystem.h"
 #include "Systems/ShapeRenderSystem.h"
+#include "Systems/LifeTimeSystem.h"

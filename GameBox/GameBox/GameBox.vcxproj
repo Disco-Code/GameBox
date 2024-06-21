@@ -170,6 +170,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Chat.cpp" />
     <ClCompile Include="ECS\Systems\AISystem.cpp" />
     <ClCompile Include="ECS\Systems\BallSystem.cpp" />
     <ClCompile Include="ECS\Systems\CollisionSystem.cpp" />
@@ -181,8 +182,12 @@
     <ClCompile Include="ECS\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="ECS\Systems\TextSystem.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Helpers.cpp" />
+    <ClCompile Include="Networking\Game-Layer\NetworkConnection.cpp" />
+    <ClCompile Include="Networking\Game-Layer\TCP-Layer\Network-Module\NetworkModule.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="state\Common UI\Button.cpp" />
+    <ClCompile Include="state\Lobby\LobbyState.cpp" />
     <ClCompile Include="state\GameState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="state\MainMenuState.cpp">
@@ -202,6 +207,7 @@
     <ClCompile Include="thirdparty\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Chat.h" />
     <ClInclude Include="ECS\Systems.h" />
     <ClInclude Include="ECS\Systems\AISystem.h" />
     <ClInclude Include="ECS\Systems\BallSystem.h" />
@@ -213,13 +219,20 @@
     <ClInclude Include="ECS\Systems\SpriteAnimationSystem.h" />
     <ClInclude Include="ECS\Systems\SpriteRenderSystem.h" />
     <ClInclude Include="ECS\Systems\TextSystem.h" />
+    <ClInclude Include="events\ChatMessageEvent.h" />
     <ClInclude Include="events\ClickActionEvent.h" />
+    <ClInclude Include="events\Networking\NetworkEvents.h" />
     <ClInclude Include="events\ScoreEvent.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Helpers.h" />
+    <ClInclude Include="Networking\Game-Layer\NetworkConnection.h" />
+    <ClInclude Include="Networking\Game-Layer\TCP-Layer\Network-Module\NetworkModule.hpp" />
+    <ClInclude Include="Networking\Game-Layer\TCP-Layer\Network-Module\NetworkStructs.hpp" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="state\Common UI\Button.h" />
+    <ClInclude Include="state\Lobby\LobbyState.h" />
     <ClInclude Include="state\GameState.h" />
     <ClInclude Include="state\MainMenuState.h" />
-    <ClInclude Include="Settings.h" />
     <ClInclude Include="state\SettingsMenuState.h" />
     <ClInclude Include="state\State.h" />
     <ClInclude Include="TextureHandler.h" />

@@ -2,6 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "state/GameState.h"
 #include "state/MainMenuState.h"
+#include "state/Lobby/LobbyState.h"
 #include "state/SettingsMenuState.h"
 
 #include "imgui/imgui.h"
@@ -11,6 +12,8 @@ Game::Game() : m_window(sf::VideoMode(1600, 800), "Gamebox setup test") {
 	m_settings.Load();
 	m_font.loadFromFile("../Resources/Arcon-Regular.otf");
 	m_currentState = new MainMenuState(this);
+	m_networkConnection.Initialize(&m_eventManager);
+	m_chat.Initialize(&m_eventManager);
 	// Set up ImGui
 	ImGui::SFML::Init(m_window);
 }
@@ -39,6 +42,8 @@ void Game::update() {
 	// Update ImGui
 	ImGui::SFML::Update(m_window, dt_time);
 
+	m_networkConnection.CheckNetworkEvents();
+
 	ApplyNextState();
 	m_currentState->processInput(dt_seconds);
 
@@ -64,6 +69,9 @@ void Game::SetState(States::ID id) {
 		break;
 	case States::Game:
 		m_nextState = new GameState(this);
+		break;
+	case States::Lobby:
+		m_nextState = new LobbyState(this);
 		break;
 	case States::SettingsMenu:
 		m_nextState = new SettingsMenuState(this);

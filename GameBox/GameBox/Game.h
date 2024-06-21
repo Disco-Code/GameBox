@@ -1,6 +1,9 @@
 #pragma once
 
 #include "state/State.h"
+#include "Networking/Game-Layer/NetworkConnection.h"
+#include "entityx/Event.h"
+#include "Chat.h"
 #include "Settings.h"
 
 class Game {
@@ -15,6 +18,9 @@ public:
 	sf::RenderWindow* getWindow();
 	sf::Font& GetFont();
 
+	NetworkConnection m_networkConnection;
+	Chat m_chat;
+
 	const Settings& GetSettingsConst() const;
 	Settings& GetSettings();
 
@@ -28,5 +34,6 @@ private:
 	State* m_currentState = nullptr;
 	State* m_nextState = nullptr;
 
+	entityx::EventManager m_eventManager;
 	Settings m_settings;
 };
